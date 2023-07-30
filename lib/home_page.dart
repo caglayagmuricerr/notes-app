@@ -4,6 +4,8 @@ import 'package:notable_now/read_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
+import 'fonts.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -56,15 +58,20 @@ class _HomePageState extends State<HomePage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Add New Note'),
+          title: Text(
+              'Add New Note',
+              style: customFontStyle,
+          ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
+                style: customFontStyle,
                 controller: titleController,
                 decoration: const InputDecoration(labelText: 'Title'),
               ),
               TextField(
+                style: customFontStyle,
                 controller: textController,
                 decoration: const InputDecoration(labelText: 'Text'),
               ),
@@ -77,13 +84,19 @@ class _HomePageState extends State<HomePage> {
                 await getNotes(); // Wait for the note to be saved before retrieving all notes
                 Navigator.of(context).pop();
               },
-              child: const Text('Add'),
+              child: Text(
+                'Add',
+                style: customFontStyle
+              ),
             ),
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('Cancel'),
+              child: Text(
+                'Cancel',
+                style: customFontStyle
+              ),
             ),
           ],
         );
@@ -117,7 +130,10 @@ class _HomePageState extends State<HomePage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Edit Note'),
+          title: Text(
+              'Edit Note',
+              style: customFontStyle
+          ),
           content: SizedBox(
             height: 500,
             width: 700,
@@ -126,10 +142,12 @@ class _HomePageState extends State<HomePage> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   TextField(
+                    style: customFontStyle,
                     controller: titleController,
                     decoration: const InputDecoration(labelText: 'Title'),
                   ),
                   TextField(
+                    style: customFontStyle,
                     controller: textController,
                     maxLines: null, // Allow the text field to have unlimited lines (scrollable)
                     keyboardType: TextInputType.multiline, // Enable multiline input
@@ -146,13 +164,19 @@ class _HomePageState extends State<HomePage> {
                 await getNotes(); // Refresh the notes after editing
                 Navigator.of(context).pop();
               },
-              child: const Text('Save'),
+              child: Text(
+                  'Save',
+                  style: customFontStyle
+              ),
             ),
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('Cancel'),
+              child: Text(
+                  'Cancel',
+                  style: customFontStyle,
+              ),
             ),
           ],
         );
@@ -218,7 +242,10 @@ class _HomePageState extends State<HomePage> {
         ),
         ElevatedButton(
           onPressed: () => _showAddNoteDialog(),
-          child: const Text('Add New Note'),
+          child: Text(
+              'Add New Note',
+              style: customFontStyle,
+          ),
         ),
       ],
     );
@@ -257,7 +284,7 @@ class NoteWidget extends StatelessWidget {
       child: InkWell(
         onTap: () => goToReadPage(context),
         child: Card(
-          color: Colors.blue,
+          color: Colors.yellow,
           child: Padding(
             padding: const EdgeInsets.all(5.0),
             child: Column(
@@ -285,7 +312,7 @@ class NoteWidget extends StatelessWidget {
                     title.length <= 15
                         ? title
                         : "${title.substring(0, 15)}...",
-                    style: const TextStyle(color: Colors.white),
+                    style: customFontStyle,
                   ),
                 ),
                 const SizedBox(height: 8),
@@ -295,7 +322,7 @@ class NoteWidget extends StatelessWidget {
                     text.length <= 50
                         ? text
                         : "${text.substring(0, 50)}...",
-                    style: const TextStyle(color: Colors.white),
+                    style: customFontStyle,
                   ),
                 ),
               ],

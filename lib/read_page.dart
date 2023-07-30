@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
+import 'fonts.dart';
+
 class ReadPage extends StatefulWidget {
   final String title;
   final String text;
 
-  ReadPage({required this.title, required this.text});
+  const ReadPage({super.key, required this.title, required this.text});
 
   @override
   State<ReadPage> createState() => _ReadPageState();
@@ -26,7 +28,10 @@ class _ReadPageState extends State<ReadPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Note Details'),
+        title: Text(
+            'Note Details',
+            style: customFontStyle,
+        ),
         /*actions: [
           IconButton(
             icon: Icon(Icons.edit),
@@ -41,15 +46,12 @@ class _ReadPageState extends State<ReadPage> {
           children: [
             Text(
               widget.title,
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
+              style: customFontStyle,
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Text(
               widget.text,
-              style: TextStyle(fontSize: 16),
+              style: customFontStyle,
             ),
           ],
         ),
