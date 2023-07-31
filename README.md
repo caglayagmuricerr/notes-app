@@ -1,6 +1,6 @@
 # notable_now
 
-🌸 NoteableNow is an intuitive notetaking app that helps users capture, organize, and access their thoughts effortlessly. 🌸
+🌸 NoteableNow is an intuitive notetaking app that helps users capture, organize, and access their thoughts effortlessly. 🌸<br />
 🫧 BackEnd here: [💻:](https://github.com/caglayagmuricerr/notes-api)🫧
 
 
