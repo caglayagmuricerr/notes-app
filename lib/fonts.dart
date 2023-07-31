@@ -8,3 +8,10 @@ TextStyle customFontStyle = GoogleFonts.dancingScript(
   fontStyle: FontStyle.normal, // You can set the font style (normal, italic, or oblique)
   letterSpacing: 1.0, // You can set the letter spacing as well
 );
+
+TextStyle appBarFontStyle = GoogleFonts.dancingScript(
+  fontSize: 25.0, // You can adjust the font size as needed
+  fontWeight: FontWeight.bold, // You can also change the font weight if required
+  fontStyle: FontStyle.normal, // You can set the font style (normal, italic, or oblique)
+  letterSpacing: 1.0, // You can set the letter spacing as well
+);

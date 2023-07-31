@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:notable_now/read_page.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
-import 'fonts.dart';
+import 'package:http/http.dart' as http;
+import 'package:notable_now/settings_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+
+import 'package:notable_now/read_page.dart';
+import 'package:notable_now/colors.dart';
+import 'package:notable_now/fonts.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -14,6 +18,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+
 
   List<dynamic> notes = []; // List to store the received notes
 
@@ -214,40 +220,74 @@ class _HomePageState extends State<HomePage> {
     );
     await getNotes(); // Refresh the notes after deletion
   }
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          child: GridView.builder(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: 10.0,
-              mainAxisSpacing: 10.0,
-            ),
-            itemCount: notes.length,
-            itemBuilder: (context, index) {
-              final note = notes[index];
-              final title = note['title'];
-              final text = note['text'];
-
-              return NoteWidget(
-                title: title,
-                text: text,
-                onEdit: () => _editNote(index), // Pass the edit function
-                onDelete: () => _deleteNote(index), // Pass the delete function
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Notes',
+          style: appBarFontStyle,
+        ),
+        centerTitle: true,
+        backgroundColor: Pastel.backgroundColor,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.settings),
+            style: Pastel.getButtonStyle(),///////////////
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                  builder: (context) => SettingsPage(),
+                ),
               );
             },
           ),
-        ),
-        ElevatedButton(
-          onPressed: () => _showAddNoteDialog(),
-          child: Text(
-              'Add New Note',
-              style: customFontStyle,
+        ],
+      ),
+      backgroundColor: Pastel.backgroundColor,
+      body: Column(
+        children: [
+          Expanded(
+            child: GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 10.0,
+                mainAxisSpacing: 10.0,
+              ),
+              itemCount: notes.length,
+              itemBuilder: (context, index) {
+                final note = notes[index];
+                final title = note['title'];
+                final text = note['text'];
+
+                int groupSize = 4; // Number of elements in each group
+                int groupIndex = (index % groupSize); // Calculate the group index and make it an integer
+
+                Color backgroundColor = (groupIndex == 0) ? Pastel.index0 : (groupIndex == 1) ? Pastel.index1 : (groupIndex == 2) ? Pastel.index2 : (groupIndex == 3) ? Pastel.index3 : Colors.white;
+                return NoteWidget(
+                  title: title,
+                  text: text,
+                  onEdit: () => _editNote(index), // Pass the edit function
+                  onDelete: () => _deleteNote(index),
+                  backgroundColor: backgroundColor,// Pass the delete function
+                );
+              },
+            ),
           ),
-        ),
-      ],
+          ElevatedButton(
+            onPressed: () => _showAddNoteDialog(),
+            style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color?>(Pastel.index3)
+            ),
+            child: Text(
+                'New Note',
+                style: customFontStyle,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -257,12 +297,14 @@ class NoteWidget extends StatelessWidget {
   final String text;
   final VoidCallback onEdit;
   final VoidCallback onDelete;
+  final Color backgroundColor;
 
   const NoteWidget({super.key,
     required this.title,
     required this.text,
     required this.onEdit,
     required this.onDelete,
+    required this.backgroundColor,
   });
 
   void goToReadPage(BuildContext context){
@@ -284,7 +326,7 @@ class NoteWidget extends StatelessWidget {
       child: InkWell(
         onTap: () => goToReadPage(context),
         child: Card(
-          color: Colors.yellow,
+          color: backgroundColor,
           child: Padding(
             padding: const EdgeInsets.all(5.0),
             child: Column(
@@ -309,9 +351,9 @@ class NoteWidget extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Text(
-                    title.length <= 15
+                    title.length <= 13
                         ? title
-                        : "${title.substring(0, 15)}...",
+                        : "${title.substring(0, 13)}...",
                     style: customFontStyle,
                   ),
                 ),
@@ -319,9 +361,9 @@ class NoteWidget extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Text(
-                    text.length <= 50
+                    text.length <= 40
                         ? text
-                        : "${text.substring(0, 50)}...",
+                        : "${text.substring(0, 40)}...",
                     style: customFontStyle,
                   ),
                 ),
